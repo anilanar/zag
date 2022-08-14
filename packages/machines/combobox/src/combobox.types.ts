@@ -72,6 +72,10 @@ type PublicContext = DirectionProperty &
      */
     blurOnSelect?: boolean
     /**
+     * Whether to close the popup on select
+     */
+    closeOnSelect?: boolean
+    /**
      * The behavior of the combobox when an option is selected
      */
     selectionBehavior?: "clear" | "set"
@@ -94,7 +98,7 @@ type PublicContext = DirectionProperty &
     /**
      * Whether to open the combobox popup on initial click on the input
      */
-    openOnClick?: boolean
+    openOnFocus?: boolean
     /**
      * Whether to allow custom values or free values in the input
      */

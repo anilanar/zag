@@ -24,7 +24,8 @@ export const comboboxControls = defineControls({
   },
   disabled: { type: "boolean", defaultValue: false },
   loop: { type: "boolean", defaultValue: true },
-  openOnClick: { type: "boolean", defaultValue: false },
+  openOnFocus: { type: "boolean", defaultValue: false },
+  closeOnSelect: { type: "boolean", defaultValue: true },
   blurOnSelect: { type: "boolean", defaultValue: false },
   selectOnTab: { type: "boolean", defaultValue: true },
 })

@@ -15,7 +15,7 @@ const fetchMachine = createMachine({
   context: {
     "focusOnClear": false,
     "autoFocus": false,
-    "openOnClick": false,
+    "focusOnOpen": false,
     "isCustomValue && !allowCustomValue": false,
     "autoComplete": false,
     "autoComplete": false,
@@ -26,8 +26,10 @@ const fetchMachine = createMachine({
     "autoComplete && isLastOptionFocused": false,
     "autoComplete && isFirstOptionFocused": false,
     "selectOnTab": false,
+    "closeOnSelect": false,
     "autoComplete": false,
-    "autoComplete": false
+    "autoComplete": false,
+    "closeOnSelect": false
   },
   activities: ["syncInputValue"],
   onEvent(ctx, evt) {
@@ -82,12 +84,13 @@ const fetchMachine = createMachine({
           target: "interacting",
           actions: ["focusInput", "invokeOnOpen"]
         },
-        POINTER_DOWN: {
-          cond: "openOnClick",
+        FOCUS: [{
+          cond: "focusOnOpen",
           target: "interacting",
-          actions: ["focusInput", "invokeOnOpen"]
-        },
-        FOCUS: "focused"
+          actions: ["invokeOnOpen"]
+        }, {
+          target: "focused"
+        }]
       }
     },
     focused: {
@@ -226,10 +229,14 @@ const fetchMachine = createMachine({
           target: "idle",
           actions: ["selectOption", "invokeOnClose"]
         },
-        ENTER: {
+        ENTER: [{
+          cond: "closeOnSelect",
           target: "focused",
           actions: ["selectOption", "invokeOnClose"]
-        },
+        }, {
+          target: "interacting",
+          actions: ["selectOption"]
+        }],
         CHANGE: [{
           cond: "autoComplete",
           target: "suggesting",
@@ -244,10 +251,14 @@ const fetchMachine = createMachine({
         }, {
           actions: ["setActiveOption", "setNavigationData"]
         }],
-        CLICK_OPTION: {
+        CLICK_OPTION: [{
+          cond: "closeOnSelect",
           target: "focused",
           actions: ["selectOption", "invokeOnClose"]
-        },
+        }, {
+          target: "interacting",
+          actions: ["selectOption"]
+        }],
         ESCAPE: {
           target: "focused",
           actions: "invokeOnClose"
@@ -274,7 +285,7 @@ const fetchMachine = createMachine({
   guards: {
     "focusOnClear": ctx => ctx["focusOnClear"],
     "autoFocus": ctx => ctx["autoFocus"],
-    "openOnClick": ctx => ctx["openOnClick"],
+    "focusOnOpen": ctx => ctx["focusOnOpen"],
     "isCustomValue && !allowCustomValue": ctx => ctx["isCustomValue && !allowCustomValue"],
     "autoComplete": ctx => ctx["autoComplete"],
     "hasFocusedOption && autoComplete": ctx => ctx["hasFocusedOption && autoComplete"],
@@ -282,6 +293,7 @@ const fetchMachine = createMachine({
     "autoHighlight": ctx => ctx["autoHighlight"],
     "autoComplete && isLastOptionFocused": ctx => ctx["autoComplete && isLastOptionFocused"],
     "autoComplete && isFirstOptionFocused": ctx => ctx["autoComplete && isFirstOptionFocused"],
-    "selectOnTab": ctx => ctx["selectOnTab"]
+    "selectOnTab": ctx => ctx["selectOnTab"],
+    "closeOnSelect": ctx => ctx["closeOnSelect"]
   }
 });

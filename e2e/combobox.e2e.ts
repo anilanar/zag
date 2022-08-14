@@ -138,10 +138,16 @@ test.describe("combobox", () => {
     await expectToBeHighlighted(option_els.last())
   })
 
-  test("[pointer / open-on-click]", async ({ page }) => {
-    await controls(page).bool("openOnClick")
+  test("[pointer / open-on-focus]", async ({ page }) => {
+    await controls(page).bool("openOnFocus")
     await page.click(input, { force: true })
     await expect(page.locator(content)).toBeVisible()
+  })
+
+  test("[focus / open-on-focus]", async ({ page }) => {
+    await controls(page).bool("openOnFocus")
+    await page.focus(input)
+    await expect(page.locator(listbox)).toBeVisible()
   })
 
   test("should scroll selected option into view", async ({ page }) => {
