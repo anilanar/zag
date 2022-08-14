@@ -218,13 +218,23 @@ export function machine(userContext: UserDefinedContext) {
             },
             ENTER: [
               {
-                guard: and("hasFocusedOption", "autoComplete"),
+                guard: and("hasFocusedOption", "autoComplete", "closeOnSelect"),
                 target: "focused",
                 actions: ["selectActiveOption", "invokeOnSelect", "blurOnSelectIfNeeded"],
               },
               {
-                guard: "hasFocusedOption",
+                guard: and("hasFocusedOption", "autoComplete", not("closeOnSelect")),
+                target: "interacting",
+                actions: ["selectActiveOption", "invokeOnSelect", "blurOnSelectIfNeeded"],
+              },
+              {
+                guard: and("hasFocusedOption", "closeOnSelect"),
                 target: "focused",
+                actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded"],
+              },
+              {
+                guard: and("hasFocusedOption", not("closeOnSelect")),
+                target: "interacting",
                 actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded"],
               },
             ],
