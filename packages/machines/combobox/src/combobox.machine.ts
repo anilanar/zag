@@ -298,11 +298,17 @@ export function machine(userContext: UserDefinedContext) {
             CLEAR_FOCUS: {
               actions: "clearFocusedOption",
             },
-            TAB: {
-              guard: "selectOnTab",
-              target: "idle",
-              actions: ["selectOption", "invokeOnClose"],
-            },
+            TAB: [
+              {
+                guard: "selectOnTab",
+                target: "idle",
+                actions: ["selectOption", "invokeOnClose"],
+              },
+              {
+                target: "idle",
+                actions: ["invokeOnClose"],
+              },
+            ],
             ENTER: [
               {
                 guard: "closeOnSelect",
