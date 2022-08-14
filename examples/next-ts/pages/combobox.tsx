@@ -21,6 +21,9 @@ export default function Page() {
         const filtered = comboboxData.filter((item) => item.label.toLowerCase().includes(value.toLowerCase()))
         setOptions(filtered.length > 0 ? filtered : comboboxData)
       },
+      onSelect: ({ value }) => {
+        console.log("select", value)
+      },
     }),
     { context: controls.context },
   )
