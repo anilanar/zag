@@ -278,7 +278,7 @@ export function machine(userContext: UserDefinedContext) {
                 actions: "focusPrevOption",
               },
             ],
-            ALT_UP: {
+            ALT_ARROW_UP: {
               target: "focused",
               actions: ["selectOption", "invokeOnClose"],
             },
