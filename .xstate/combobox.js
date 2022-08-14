@@ -27,7 +27,8 @@ const fetchMachine = createMachine({
     "autoComplete && isFirstOptionFocused": false,
     "selectOnTab": false,
     "autoComplete": false,
-    "autoComplete": false
+    "autoComplete": false,
+    "closeOnSelect": false
   },
   entry: ["setupLiveRegion"],
   exit: ["removeLiveRegion"],
@@ -221,10 +222,14 @@ const fetchMachine = createMachine({
           target: "idle",
           actions: ["selectOption", "invokeOnClose"]
         },
-        ENTER: {
+        ENTER: [{
+          cond: "closeOnSelect",
           target: "focused",
           actions: ["selectOption", "invokeOnClose"]
-        },
+        }, {
+          target: "interacting",
+          actions: ["selectOption"]
+        }],
         CHANGE: [{
           cond: "autoComplete",
           target: "suggesting",
@@ -239,10 +244,14 @@ const fetchMachine = createMachine({
         }, {
           actions: ["setActiveOption", "setNavigationData"]
         }],
-        CLICK_OPTION: {
+        CLICK_OPTION: [{
+          cond: "closeOnSelect",
           target: "focused",
           actions: ["selectOption", "invokeOnClose"]
-        },
+        }, {
+          target: "interacting",
+          actions: ["selectOption"]
+        }],
         ESCAPE: {
           target: "focused",
           actions: "invokeOnClose"
@@ -276,6 +285,7 @@ const fetchMachine = createMachine({
     "autoHighlight": ctx => ctx["autoHighlight"],
     "autoComplete && isLastOptionFocused": ctx => ctx["autoComplete && isLastOptionFocused"],
     "autoComplete && isFirstOptionFocused": ctx => ctx["autoComplete && isFirstOptionFocused"],
-    "selectOnTab": ctx => ctx["selectOnTab"]
+    "selectOnTab": ctx => ctx["selectOnTab"],
+    "closeOnSelect": ctx => ctx["closeOnSelect"]
   }
 });

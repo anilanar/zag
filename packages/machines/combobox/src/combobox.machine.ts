@@ -290,10 +290,17 @@ export function machine(userContext: UserDefinedContext) {
               target: "idle",
               actions: ["selectOption", "invokeOnClose"],
             },
-            ENTER: {
-              target: "focused",
-              actions: ["selectOption", "invokeOnClose"],
-            },
+            ENTER: [
+              {
+                guard: "closeOnSelect",
+                target: "focused",
+                actions: ["selectOption", "invokeOnClose"],
+              },
+              {
+                target: "interacting",
+                actions: ["selectOption"],
+              },
+            ],
             CHANGE: [
               {
                 guard: "autoComplete",
@@ -314,10 +321,17 @@ export function machine(userContext: UserDefinedContext) {
                 actions: ["setActiveOption", "setNavigationData"],
               },
             ],
-            CLICK_OPTION: {
-              target: "focused",
-              actions: ["selectOption", "invokeOnClose"],
-            },
+            CLICK_OPTION: [
+              {
+                guard: "closeOnSelect",
+                target: "focused",
+                actions: ["selectOption", "invokeOnClose"],
+              },
+              {
+                target: "interacting",
+                actions: ["selectOption"],
+              },
+            ],
             ESCAPE: {
               target: "focused",
               actions: "invokeOnClose",
@@ -338,6 +352,7 @@ export function machine(userContext: UserDefinedContext) {
     {
       guards: {
         openOnClick: (ctx) => !!ctx.openOnClick,
+        closeOnSelect: (ctx) => !!ctx.closeOnSelect,
         isInputValueEmpty: (ctx) => ctx.isInputValueEmpty,
         focusOnClear: (ctx) => !!ctx.focusOnClear,
         autoFocus: (ctx) => !!ctx.autoFocus,

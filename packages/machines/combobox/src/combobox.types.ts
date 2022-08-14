@@ -74,6 +74,10 @@ type PublicContext = DirectionProperty &
      */
     blurOnSelect?: boolean
     /**
+     * Whether to close the popup on select
+     */
+    closeOnSelect?: boolean
+    /**
      * The behavior of the combobox when an option is selected
      */
     selectionBehavior?: "clear" | "set"
