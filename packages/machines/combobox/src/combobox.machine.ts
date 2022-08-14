@@ -70,7 +70,6 @@ export function machine(userContext: UserDefinedContext) {
       watch: {
         inputValue: "invokeOnInputChange",
         navigationData: "invokeOnHighlight",
-        selectionData: ["invokeOnSelect", "blurOnSelectIfNeeded"],
         activeId: "setSectionLabel",
       },
 
@@ -221,12 +220,12 @@ export function machine(userContext: UserDefinedContext) {
               {
                 guard: and("hasFocusedOption", "autoComplete"),
                 target: "focused",
-                actions: "selectActiveOption",
+                actions: ["selectActiveOption", "invokeOnSelect", "blurOnSelectIfNeeded"],
               },
               {
                 guard: "hasFocusedOption",
                 target: "focused",
-                actions: "selectOption",
+                actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded"],
               },
             ],
             CHANGE: [
@@ -293,7 +292,7 @@ export function machine(userContext: UserDefinedContext) {
             ],
             ALT_UP: {
               target: "focused",
-              actions: ["selectOption", "invokeOnClose"],
+              actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded", "invokeOnClose"],
             },
             CLEAR_FOCUS: {
               actions: "clearFocusedOption",
@@ -302,7 +301,7 @@ export function machine(userContext: UserDefinedContext) {
               {
                 guard: "selectOnTab",
                 target: "idle",
-                actions: ["selectOption", "invokeOnClose"],
+                actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded", "invokeOnClose"],
               },
               {
                 target: "idle",
@@ -313,11 +312,11 @@ export function machine(userContext: UserDefinedContext) {
               {
                 guard: "closeOnSelect",
                 target: "focused",
-                actions: ["selectOption", "invokeOnClose"],
+                actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded", "invokeOnClose"],
               },
               {
                 target: "interacting",
-                actions: ["selectOption"],
+                actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded"],
               },
             ],
             CHANGE: [
@@ -344,11 +343,11 @@ export function machine(userContext: UserDefinedContext) {
               {
                 guard: "closeOnSelect",
                 target: "focused",
-                actions: ["selectOption", "invokeOnClose"],
+                actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded", "invokeOnClose"],
               },
               {
                 target: "interacting",
-                actions: ["selectOption"],
+                actions: ["selectOption", "invokeOnSelect", "blurOnSelectIfNeeded"],
               },
             ],
             ESCAPE: {
