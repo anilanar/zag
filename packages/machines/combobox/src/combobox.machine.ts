@@ -38,6 +38,10 @@ export function machine(userContext: UserDefinedContext) {
         isCustomValue: (data) => data.inputValue !== data.previousValue,
         inputBehavior: "none",
         selectionBehavior: "set",
+        popperOptions: {
+          flip: true,
+          sameWidth: true,
+        },
         ...ctx,
         positioning: {
           placement: "bottom",
