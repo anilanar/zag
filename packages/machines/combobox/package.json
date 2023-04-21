@@ -1,6 +1,6 @@
 {
   "name": "@userlike/zag-combobox",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Core logic for the combobox widget implemented as a state machine",
   "keywords": [
     "js",
