@@ -39,6 +39,7 @@ export function machine(userContext: UserDefinedContext) {
         isCustomValue: (data) => data.inputValue !== data.previousValue,
         inputBehavior: "none",
         selectionBehavior: "set",
+        closeOnSelect: true,
         ...ctx,
         positioning: {
           placement: "bottom",
